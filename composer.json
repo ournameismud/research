@@ -1,0 +1,45 @@
+{
+    "name": "ournameismud/research",
+    "description": "Extending the native Craft search",
+    "type": "craft-plugin",
+    "version": "1.0.2",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "search",
+        "research",
+        "re-search"
+    ],
+    "support": {
+        "docs": "https://github.com/ournameismud/research/blob/master/README.md",
+        "issues": "https://github.com/ournameismud/research/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "@cole007",
+            "homepage": "http://ournameismud.co.uk/"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "ournameismud\\research\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Re-search",
+        "handle": "research",
+        "hasCpSettings": false,
+        "hasCpSection": true,
+        "changelogUrl": "https://raw.githubusercontent.com/ournameismud/research/master/CHANGELOG.md",
+        "components": {
+            "log": "ournameismud\\research\\services\\Log"
+        },
+        "class": "ournameismud\\research\\Research"
+    }
+}

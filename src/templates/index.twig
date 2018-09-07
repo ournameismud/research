@@ -1,0 +1,79 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Research plugin for Craft CMS 3.x
+ *
+ * Research index.twig
+ *
+ * @author    @cole007
+ * @copyright Copyright (c) 2018 @cole007
+ * @link      http://ournameismud.co.uk/
+ * @package   Research
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{# {% do view.registerAssetBundle("ournameismud\\research\\assetbundles\\research\\ResearchAsset") %} #}
+{% do view.registerAssetBundle("ournameismud\\research\\assetbundles\\indexcpsection\\IndexCPSectionAsset") %}
+
+{% set docsUrl = "https://github.com/ournameismud/research/blob/master/README.md" %}
+
+{% set title = "Search Logs" %}
+
+{% set pluginCpUrl = url('research') %}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@ournameismud/research/assetbundles/indexcpsection/dist', true) ~ '/img/Index-icon.svg' %}
+
+{% set content %}
+    <h2>{{ "Search Logs"|t('research') }}</h2>
+    {% set o = craft.request.getParam('offset') ? craft.request.getParam('offset') : 0 %}
+    {% set pp = 20 %}
+    {% set logsSrc = craft.research.logs() %}
+    {% set logs = logsSrc|slice(o,pp) %}
+    {% if logs|length %}
+    <div class="tableview">
+    <table class="data fullwidth">
+    	<thead>
+    		<tr>
+    			<th>Search term</th>
+    			<th>Page</th>
+    			<th>Ip Address</th>
+    			<th>Results returned</th>
+    			<th>Date</th>
+    		</tr>
+    	</thead>
+    	{% if logsSrc|length > pp %}
+    	<tfoot>
+    		<tr>
+    			<td colspan="5">
+    				<ul class="paginate">
+    				{% set ps = (logsSrc|length / pp)|round(0,'floor') %}
+    				{% for i in 0..ps %}
+    					{% set offset = (i*pp) %}
+    					<li{{ offset == o ? ' class="active"' }}><a href="{{ url('research?offset=' ~ offset) }}">{{ i+1 }}</a></li>
+    				{% endfor %}
+    				</ul>
+    			</td>
+    		</tr>
+    	</tfoot>
+    	{% endif %}
+	    <tbody>
+	    {% for log in logs %}
+		    <tr>
+		    	<td>{{ log.q }}</td>
+		    	<td>{{ log.context }}</td>
+		    	<td>{{ log.ip_address }}</td>
+		    	<td>{{ log.results }}</td>
+		    	<td>{{ log.dateUpdated|date('H:i j/n/Y') }}</td>
+		    </tr>
+	    {% endfor %}
+		</tbody>
+	</table>
+	</div>
+    {% else %}
+    <p>No search logs available</p>
+    {% endif %}
+{% endset %}
