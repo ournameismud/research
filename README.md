@@ -65,7 +65,9 @@ The logs are visible in the Control Panel
 
 Some things to do, and ideas for potential features:
 
-* Release it
+* Refine logs by IP address
+* Refine logs by Search term
+* Tweak pagination
 
 Brought to you by [@cole007](http://ournameismud.co.uk/)
 Search icon by AomAm from the Noun Project
