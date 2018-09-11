@@ -67,7 +67,9 @@ Some things to do, and ideas for potential features:
 
 * Refine logs by IP address
 * Refine logs by Search term
+* Rate-limit logging of queries?
 * Tweak pagination
+* post to search controller rather than as variable ?
 
 Brought to you by [@cole007](http://ournameismud.co.uk/)
 Search icon by AomAm from the Noun Project
