@@ -46,7 +46,7 @@ class Research extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.2';
+    public $schemaVersion = '1.0.3';
 
     // Public Methods
     // =========================================================================

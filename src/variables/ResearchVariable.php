@@ -34,12 +34,12 @@ class ResearchVariable
      * @param null $optional
      * @return string
      */
-    public function get($criteria = null, $type = 'entries')
+    public function get($term, $criteria = null, $type = 'entries')
     {
-        if(is_array($criteria) && array_key_exists('search', $criteria)) {
-            $q = $criteria['search'];
-        } elseif(is_string($criteria)) {
-            $q = $criteria;
+        if(is_array($term) && array_key_exists('search', $term)) {
+            $q = $term['search'];
+        } elseif(is_string($term)) {
+            $q = $term;
         } else {
             $q = '';    
         }
@@ -49,7 +49,7 @@ class ResearchVariable
                 $ids = Entry::find();
             break;
             case 'categories':
-                $ids = Entry::find();
+                $ids = Category::find();
             break;
             case 'entries':
                 $ids = Entry::find(); 
@@ -64,7 +64,11 @@ class ResearchVariable
                 $ids = Entry::find(); 
             break;
         }
-        
+        if ($criteria) {
+            foreach ($criteria AS $key => $value) {
+                $ids->$key = $value;    
+            }
+        }
         $ids->search($q)
             ->orderBy('score')
             ->all(); 
