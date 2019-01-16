@@ -80,7 +80,7 @@ class ResearchVariable
         foreach($ids AS $id) {
             // do weighted search here
             $searchField = $this->searchField;
-            if ($id->$searchField) {
+            if ($id->$searchField and !empty($term)) {
                 foreach ($id->$searchField->all() AS $tag) {
                     $keywords = $tag->keywords;
                     $score = $tag->score;
