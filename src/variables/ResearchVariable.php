@@ -34,7 +34,7 @@ class ResearchVariable
      * @param null $optional
      * @return string
      */
-    public $searchField = 'searchWeighting';
+    public $searchField = 'searchBoost';
     public $scoreBoost = 50;
     public function get($term, $criteria = null, $type = 'entries')
     {
@@ -82,10 +82,14 @@ class ResearchVariable
             $searchField = $this->searchField;
             if ($id->$searchField) {
                 foreach ($id->$searchField->all() AS $tag) {
-                    if (strpos($tag, strtolower($term)) !== false) {
-                        $id->searchScore += $this->scoreBoost;
-                    } 
-                }
+                    $keywords = $tag->keywords;
+                    $score = $tag->score;
+                    foreach($keywords AS $keyword) {                        
+                        if (strpos($keyword, strtolower($term)) !== false) {
+                            $id->searchScore += $score;
+                        } 
+                    }                    
+                }                
             }
             $tmp = [];
             $tmp['id'] = $id->id;
