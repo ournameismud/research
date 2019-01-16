@@ -34,6 +34,8 @@ class ResearchVariable
      * @param null $optional
      * @return string
      */
+    public $searchField = 'searchWeighting';
+    public $scoreBoost = 50;
     public function get($term, $criteria = null, $type = 'entries')
     {
         if(is_array($term) && array_key_exists('search', $term)) {
@@ -72,12 +74,43 @@ class ResearchVariable
         $ids->search($q)
             ->orderBy('score')
             ->all(); 
+        
+        $results = [];
+        // foreach ($ids->searchScores AS )
+        foreach($ids AS $id) {
+            // do weighted search here
+            $searchField = $this->searchField;
+            if ($id->$searchField) {
+                foreach ($id->$searchField->all() AS $tag) {
+                    if (strpos($tag, strtolower($term)) !== false) {
+                        $id->searchScore += $this->scoreBoost;
+                    } 
+                }
+            }
+            $tmp = [];
+            $tmp['id'] = $id->id;
+            $tmp['title'] = $id->title;
+            $tmp['class'] = $type;
+            if ($type == 'entries') $tmp['type'] = $id->type;
+            elseif ($type == 'categories') $tmp['type'] = $id->group->handle;
+            $tmp['product_preview'] = $id->product_preview;
+            $tmp['searchScore'] = $id->searchScore;
+            $tmp['url'] = $id->url;
+            $results[] = $tmp;
+        }
+        usort($results, function($a, $b) {
+            if ($a['searchScore'] == $b['searchScore']) {
+                return 0;
+            }
+            return ($a['searchScore'] > $b['searchScore']) ? -1 : 1;
+        });
+        
         Research::getInstance()->log->save( array(
             'q' => $q, 
             'results' => count($ids), 
             'type' => $type 
         ) );
-        return $ids;        
+        return $results;
     }
     public function logs($criteria = null)
     {
