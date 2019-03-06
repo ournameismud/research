@@ -72,17 +72,16 @@ class ResearchVariable
             }
         }
         $ids->search($q)
-            ->orderBy('score')
-            ->all(); 
+            ->orderBy('score'); 
         
         $results = [];
         // foreach ($ids->searchScores AS )
-        foreach($ids AS $id) {
+        foreach($ids->all() AS $id) {
             // do weighted search here
             $searchField = $this->searchField;
             if ($id->$searchField and !empty($term)) {
                 foreach ($id->$searchField->all() AS $tag) {
-                    $keywords = $tag->keywords;
+                    $keywords = $tag->term;
                     $score = $tag->score;
                     foreach($keywords AS $keyword) {                        
                         if (strpos($keyword, strtolower($term)) !== false) {

@@ -2,7 +2,7 @@
     "name": "ournameismud/research",
     "description": "Extending the native Craft search",
     "type": "craft-plugin",
-    "version": "1.0.5.1",
+    "version": "1.0.6",
     "keywords": [
         "craft",
         "cms",
