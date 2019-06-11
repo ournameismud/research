@@ -94,9 +94,28 @@ class ResearchVariable
             $tmp['id'] = $id->id;
             $tmp['title'] = $id->title;
             $tmp['class'] = $type;
-            if ($type == 'entries') $tmp['type'] = $id->type;
-            elseif ($type == 'categories') $tmp['type'] = $id->group->handle;
-            $tmp['product_preview'] = $id->product_preview;
+            $preview_image = null;
+            if ($type == 'entries') {
+                $tmp['type'] = $id->type;
+                switch ($id->type) {
+                    case 'products':
+                    $preview_image = $id->product_preview;
+                    break;
+                    case 'news':
+                    $preview_image = $id->news_preview;
+                    break;
+                    case 'caseStudy':
+                    $preview_image = $id->caseStudies_preview;
+                    break;
+                    case 'service_details':
+                    $preview_image = $id->services_preview;
+                    break;
+                }                
+            } elseif ($type == 'categories') {
+                $tmp['type'] = $id->group->handle;
+                $preview_image = $id->product_preview;
+            }
+            $tmp['preview_image'] = $preview_image;
             $tmp['searchScore'] = $id->searchScore;
             $tmp['url'] = $id->url;
             $results[] = $tmp;
