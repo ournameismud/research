@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.7 - 2019-06-11
+### Added
+- Abstract data fetched to other sections (image source)
+
 ## 1.0.6 - 2019-02-06
 ### Added
 - Add new variable (get categories)
