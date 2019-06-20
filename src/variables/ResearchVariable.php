@@ -110,6 +110,9 @@ class ResearchVariable
                     case 'service_details':
                     $preview_image = $id->services_preview;
                     break;
+                    default:
+                    $preview_image = $id->common_preview;
+                    break;
                 }                
             } elseif ($type == 'categories') {
                 $tmp['type'] = $id->group->handle;
